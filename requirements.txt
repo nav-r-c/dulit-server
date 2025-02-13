@@ -20,6 +20,7 @@ Jinja2==3.1.5
 lxml==5.3.1
 MarkupSafe==3.0.2
 packaging==24.2
+pdfkit==1.0.0
 pillow==11.1.0
 pycparser==2.22
 PyDocX==0.9.10
