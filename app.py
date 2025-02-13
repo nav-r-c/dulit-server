@@ -5,6 +5,7 @@ import uuid
 import requests
 from docxtpl import DocxTemplate
 import time
+import pdfkit
 
 
 # Load environment variables
@@ -33,6 +34,29 @@ def modify_docx(first_name, day_number, output_path):
     context = {"FirstName": first_name, "DayNumber": day_number}
     doc.render(context)
     doc.save(output_path)
+
+import subprocess
+import os
+
+def convert_docx_to_pdf_libreoffice(docx_path):
+    """Convert DOCX to PDF using LibreOffice in headless mode."""
+    pdf_path = docx_path.replace(".docx", ".pdf")
+    try:
+        subprocess.run(
+            ["libreoffice", "--headless", "--convert-to", "pdf", "--outdir", os.path.dirname(pdf_path), docx_path],
+            check=True
+        )
+        return pdf_path
+    except subprocess.CalledProcessError as e:
+        print(f"Error converting DOCX to PDF: {e}")
+        return None
+
+
+def convert_docx_to_pdf_wkhtmltopdf(docx_path):
+    """Convert DOCX to PDF using pdfkit and wkhtmltopdf."""
+    pdf_path = docx_path.replace(".docx", ".pdf")
+    pdfkit.from_file(docx_path, pdf_path)
+    return pdf_path
 
 
 def convert_docx_to_pdf_cloudconvert(docx_path):
@@ -141,7 +165,7 @@ def generate_doc():
         modify_docx(first_name, day_number, docx_path)
 
         # Convert DOCX to PDF via CloudConvert
-        pdf_url = convert_docx_to_pdf_cloudconvert(docx_path)
+        pdf_url = convert_docx_to_pdf_libreoffice(docx_path)
 
         # Clean up temporary file
         os.remove(docx_path)
