@@ -5,6 +5,7 @@ from bson.objectid import ObjectId
 def create_speaker():
     data = request.json
     speaker = {
+        "imageUrl" : data['imageUrl'],
         "name": data["name"],
         "bio": data["bio"],
         "programmes": [ObjectId(prog_id) for prog_id in data["programmes"]]

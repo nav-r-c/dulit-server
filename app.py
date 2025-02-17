@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 from models import Programme, Speaker
 
+
 # Load environment variables
 load_dotenv()
 
@@ -36,10 +37,13 @@ Speaker.collection = mongo.db.speakers
 from routes.doc_routes import doc_bp
 from routes.programme_routes import programme_bp
 from routes.speaker_routes import speaker_bp
+from routes.image_routes import image_routes
+
 
 app.register_blueprint(doc_bp)
 app.register_blueprint(programme_bp)
 app.register_blueprint(speaker_bp)
+app.register_blueprint(image_routes)
 
 if __name__ == "__main__":
     print("🚀 Flask server running on http://127.0.0.1:3000")
