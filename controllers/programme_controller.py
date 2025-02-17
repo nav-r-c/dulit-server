@@ -6,6 +6,7 @@ def create_programme():
     data = request.json
     programme = {
         "name": data["name"],
+        "description": data["description"],
         "day_number": data["day_number"],
         "date": data["date"],
         "start_datetime": data["start_datetime"],
