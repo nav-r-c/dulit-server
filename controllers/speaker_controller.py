@@ -8,7 +8,7 @@ def create_speaker():
         "imageUrl" : data['imageUrl'],
         "name": data["name"],
         "bio": data["bio"],
-        "programmes": [ObjectId(prog_id) for prog_id in data["programmes"]]
+        "programmes": data['programmes']
     }
     result = Speaker.create(speaker)
     return jsonify({"message": "Speaker created", "id": str(result.inserted_id)}), 201
@@ -28,9 +28,6 @@ def get_speaker(speaker_id):
 def update_speaker(speaker_id):
     data = request.json
     update_data = {key: data[key] for key in data if data[key] is not None}
-
-    if "programmes" in update_data:
-        update_data["programmes"] = [ObjectId(prog_id) for prog_id in update_data["programmes"]]
 
     result = Speaker.update(speaker_id, update_data)
 
