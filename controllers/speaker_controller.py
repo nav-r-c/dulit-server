@@ -8,7 +8,8 @@ def create_speaker():
         "imageUrl" : data['imageUrl'],
         "name": data["name"],
         "bio": data["bio"],
-        "programmes": data['programmes']
+        "programmes": data['programmes'],
+        "priority" : data['priority']
     }
     result = Speaker.create(speaker)
     return jsonify({"message": "Speaker created", "id": str(result.inserted_id)}), 201
